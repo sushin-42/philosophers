@@ -12,7 +12,8 @@
 
 NAME = philo
 SRCS = main.c \
-		ft_atoi.c
+		ft_atoi.c \
+		error_utils.c
 OBJS = $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 CC = gcc
