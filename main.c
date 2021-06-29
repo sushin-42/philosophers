@@ -40,9 +40,9 @@ void	*t_function(void *data)
 	i = 0;
 	while (i < 5)
 	{
-		// printf("pid = %d, tid = %x, i = %d\n", pid, (unsigned int)(philos->tid), i);
+		printf("pid = %d, tid = %x, i = %d\n", pid, (unsigned int)(philos->tid), i);
 		i++;
-		// sleep(1);
+		sleep(1);
 	}
 	return (NULL);
 }
@@ -74,7 +74,7 @@ int		main(int ac, char **av)
 	t_rule	*rules;
 	t_mutex	*mutex;
 
-	if (ac != 5)
+	if (ac != 5 && ac != 6)
 		return (printf("arguments error\n"));
 	rules = rule_structure(av);
 	philos = philo_structure(rules, av[1]);
@@ -84,6 +84,7 @@ int		main(int ac, char **av)
 	// gettimeofday(&starttime, NULL);
 	// printf("%ld:%d\n", starttime.tv_sec, starttime.tv_usec);
 	// usleep(5000);
+
 	return (0);
 }
 
