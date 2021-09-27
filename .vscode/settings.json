@@ -1,0 +1,10 @@
+{
+	"files.associations": {
+		"stdio.h": "c"
+	},
+	// "editor.fontFamily": "Fira Code",
+	"editor.fontFamily": "FiraCode-Retina",
+	"editor.fontLigatures": true,
+
+	"editor.fontWeight": "600"
+}
