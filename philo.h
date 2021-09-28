@@ -19,6 +19,14 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+# define EAT 1
+# define SLEEP 2
+# define THINK 3
+# define LFORK 4
+# define RFORK 5
+# define PLFORK 6
+# define PRFORK 7
+
 enum states {
 	eating = 1,
 	sleeping,
@@ -30,8 +38,8 @@ typedef struct		s_philo
 	pthread_t		tid;
 	pthread_t		monitor;
 	int				num;
-	int				r_fork;
-	int				l_fork;
+	pthread_mutex_t	r_fork;
+	pthread_mutex_t	l_fork;
 	int				eat_cnt;
 	struct s_rule	*rule;
 	struct s_mutex	*mutex;
@@ -48,7 +56,8 @@ typedef struct		s_rule
 
 typedef struct		s_mutex
 {
-	pthread_mutex_t *fork_mutex;
+	pthread_mutex_t	*fork_mutex;
+	pthread_mutex_t	writing_mutex;
 }					t_mutex;
 
 int		ft_atoi(const char *str);
@@ -57,6 +66,10 @@ t_philo	**philo_structure(t_rule *rules, t_mutex *mutexs);
 t_mutex	*mutex_structure(int philonum);
 void	*philo_act(void *data);
 void	*monitor_act(void *data);
+void	putdown_fork(t_philo *philos);
+void	take_fork(t_philo *philos);
+void	act_eat(t_philo *philos);
+void	writing(t_philo *philos, int state);
 
 
 
