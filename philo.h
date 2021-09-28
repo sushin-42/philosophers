@@ -57,7 +57,6 @@ t_philo	**philo_structure(t_rule *rules, t_mutex *mutexs);
 t_mutex	*mutex_structure(int philonum);
 void	*philo_act(void *data);
 void	*monitor_act(void *data);
-void	th_detach(t_philo **philos, t_rule *rules);
 
 
 

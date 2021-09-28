@@ -17,7 +17,7 @@ t_philo	**philo_structure(t_rule *rules, t_mutex *mutexs)
 		thr_err_chk = pthread_create(&(philos[i]->monitor), NULL, monitor_act, (void *)philos[i]);
 		pthread_create_error_check(thr_err_chk);
 		philos[i]->rule = rules;
-		philos[i]->num = rules->num;
+		philos[i]->num = i;
 		philos[i]->mutex = mutexs;
 	}
 	return (philos);
@@ -26,8 +26,44 @@ t_philo	**philo_structure(t_rule *rules, t_mutex *mutexs)
 void	*philo_act(void *data)
 {
 	t_philo	*philos;
-
+	int i = 0;
 	philos = (t_philo *)data;
+	while(i < 5)
+	{
+		if (philos->num % 2 == 0)
+		{
+			pthread_mutex_lock(&(philos->mutex->fork_mutex[philos->num % philos->rule->num]));
+			printf("%d has taken a %d left fork\n", philos->num, philos->num % philos->rule->num);
+			pthread_mutex_lock(&(philos->mutex->fork_mutex[(philos->num + 1) % philos->rule->num]));
+			printf("%d has taken a %d right fork\n", philos->num, (philos->num + 1) % philos->rule->num);
+
+			pthread_mutex_unlock(&(philos->mutex->fork_mutex[philos->num % philos->rule->num]));
+			printf("%d put down a left fork\n", philos->num);
+			pthread_mutex_unlock(&(philos->mutex->fork_mutex[(philos->num + 1) % philos->rule->num]));
+			printf("%d put down a right fork\n", philos->num);
+			printf("%d sleeping\n", philos->num);
+
+			usleep(philos->rule->time_to_sleep * 1000);
+		}
+		else if (philos->num % 2 == 1)
+		{
+			pthread_mutex_lock(&(philos->mutex->fork_mutex[(philos->num + 1) % philos->rule->num]));
+			printf("%d has taken a %d right fork\n", philos->num, (philos->num + 1) % philos->rule->num);
+			pthread_mutex_lock(&(philos->mutex->fork_mutex[philos->num % philos->rule->num]));
+			printf("%d has taken a %d left fork\n", philos->num, philos->num % philos->rule->num);
+
+			pthread_mutex_unlock(&(philos->mutex->fork_mutex[(philos->num + 1) % philos->rule->num]));
+			printf("%d put down a right fork\n", philos->num);
+			pthread_mutex_unlock(&(philos->mutex->fork_mutex[philos->num % philos->rule->num]));
+			printf("%d put down a left fork\n", philos->num);
+			printf("%d sleeping\n", philos->num);
+
+			usleep(philos->rule->time_to_sleep * 1000);
+
+
+		}
+		i++;
+	}
 	return (NULL);
 }
 
@@ -73,19 +109,6 @@ t_mutex	*mutex_structure(int philonum)
 	return (main_mutex);
 }
 
-// void	th_detach(t_philo **philos, t_rule *rules)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while(i < rules->num)
-// 	{
-// 		printf("detach %d\n", i);
-// 		pthread_join(philos[i]->tid, NULL);
-// 		i++;
-// 	}
-// }
-
 int		main(int ac, char **av)
 {
 	t_philo	**philos;
@@ -98,6 +121,12 @@ int		main(int ac, char **av)
 	mutexs = mutex_structure(rules->num);
 	philos = philo_structure(rules, mutexs);
 
-	// th_detach(philos, rules);
+	int i = rules->num - 1;
+	while(i > 0)
+	{
+		pthread_join(philos[i]->tid, NULL);
+		i--;
+	}
+
 	return (0);
 }
