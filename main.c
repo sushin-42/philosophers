@@ -10,6 +10,7 @@ void	*philo_act(void *data)
 		take_fork(philos);
 		act_eat(philos);
 		putdown_fork(philos);
+		act_sleep(philos);
 		i++;
 	}
 	return (NULL);

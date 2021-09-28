@@ -70,6 +70,8 @@ void	putdown_fork(t_philo *philos);
 void	take_fork(t_philo *philos);
 void	act_eat(t_philo *philos);
 void	writing(t_philo *philos, int state);
+void	act_sleep(t_philo *philos);
+
 
 
 

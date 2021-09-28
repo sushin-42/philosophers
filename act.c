@@ -19,11 +19,13 @@ void	putdown_fork(t_philo *philos)
 
 void	act_eat(t_philo *philos)
 {
-	usleep(philos->rule->time_to_eat * 1000);
 	writing(philos, EAT);
+	usleep(philos->rule->time_to_eat * 1000);
 }
 
 void	act_sleep(t_philo *philos)
 {
+
+	writing(philos, SLEEP);
 	usleep(philos->rule->time_to_sleep * 1000);
 }

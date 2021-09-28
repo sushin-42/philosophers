@@ -21,6 +21,7 @@ t_philo	**philo_structure(t_rule *rules, t_mutex *mutexs)
 		philos[i]->mutex = mutexs;
 		philos[i]->r_fork = mutexs->fork_mutex[i];
 		philos[i]->l_fork = mutexs->fork_mutex[(i + 1) % rules->num];
+		printf("%d\n", i);
 	}
 	return (philos);
 }
