@@ -15,6 +15,7 @@ t_philo	**philo_structure(t_rule *rules, t_mutex *mutexs)
 		thr_err_chk = pthread_create(&(philos[i]->tid), NULL, philo_act, (void *)philos[i]);
 		pthread_create_error_check(thr_err_chk);
 		pthread_detach(philos[i]->tid);
+		philos[i]->eat_cnt = 0;
 		philos[i]->rule = rules;
 		philos[i]->num = i;
 		philos[i]->mutex = mutexs;

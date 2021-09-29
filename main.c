@@ -3,15 +3,15 @@
 void	*philo_act(void *data)
 {
 	t_philo	*philos;
-	int i = 0;
 	philos = (t_philo *)data;
-	while(i < 3)
+	gettimeofday(&(philos->eat_time), NULL);
+	while(1)
 	{
 		take_fork(philos);
 		act_eat(philos);
 		putdown_fork(philos);
 		act_sleep(philos);
-		i++;
+		act_think(philos);
 	}
 	return (NULL);
 }
@@ -28,6 +28,6 @@ int		main(int ac, char **av)
 	mutexs = mutex_structure(rules->num);
 	philos = philo_structure(rules, mutexs);
 
-	while(1);
+	monitor_philo(philos);
 	return (0);
 }

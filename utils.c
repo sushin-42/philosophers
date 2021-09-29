@@ -24,8 +24,9 @@ long int	timediff(struct timeval *start, struct timeval *end)
 	long int endtime;
 	long int starttime;
 
-	endtime = ((end->tv_sec * 1000) + end->tv_usec) / 1000;
-	starttime = ((start->tv_sec * 1000) + start->tv_usec) / 1000;
+	endtime = (end->tv_sec * 1000) + end->tv_usec / 1000;
+
+	starttime = (start->tv_sec * 1000) + start->tv_usec / 1000;
 	return (endtime - starttime);
 }
 
@@ -52,5 +53,7 @@ void	writing(t_philo *philos, int state)
 		printf("%ldms %d put down right fork\n", printtime, philos->num);
 	else if (state == 7)
 		printf("%ldms %d put down right fork\n", printtime, philos->num);
+	else if (state == 8)
+		printf("%ldms %d died\n", printtime, philos->num);
 	pthread_mutex_unlock(&(philos->mutex->writing_mutex));
 }

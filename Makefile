@@ -16,7 +16,8 @@ SRCS = main.c \
 		error_utils.c \
 		init.c \
 		act.c \
-		utils.c
+		utils.c \
+		monitor.c
 OBJS = $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 CC = gcc

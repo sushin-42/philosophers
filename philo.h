@@ -26,6 +26,8 @@
 # define RFORK 5
 # define PLFORK 6
 # define PRFORK 7
+# define DIE 8
+
 
 enum states {
 	eating = 1,
@@ -43,6 +45,8 @@ typedef struct		s_philo
 	struct s_rule	*rule;
 	struct s_mutex	*mutex;
 	struct timeval	start;
+	struct timeval	eat_time;
+
 }					t_philo;
 
 typedef struct		s_rule
@@ -65,7 +69,6 @@ t_rule	*rule_structure(char **av);
 t_philo	**philo_structure(t_rule *rules, t_mutex *mutexs);
 t_mutex	*mutex_structure(int philonum);
 void	*philo_act(void *data);
-void	*monitor_act(void *data);
 void	putdown_fork(t_philo *philos);
 void	take_fork(t_philo *philos);
 void	act_eat(t_philo *philos);
@@ -73,6 +76,11 @@ void	writing(t_philo *philos, int state);
 void	act_sleep(t_philo *philos);
 void	div_usleep(long int time);
 long int	timediff(struct timeval *start, struct timeval *end);
+void	act_think(t_philo *philos);
+void	monitor_philo(t_philo **philos);
+void	eat_monitor(t_philo **philos);
+void	die_monitor(t_philo **philos);
+int	check_alive(t_philo **philos);
 
 
 
