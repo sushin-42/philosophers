@@ -8,20 +8,21 @@ t_philo	**philo_structure(t_rule *rules, t_mutex *mutexs)
 
 
 	philos = (t_philo **)malloc(sizeof(t_philo *) * rules->num);
-	i = -1;
-	while (i++ < rules->num - 1)
+	i = 0;
+	while (i < rules->num)
 	{
 		philos[i] = (t_philo *)malloc(sizeof(t_philo));
 		thr_err_chk = pthread_create(&(philos[i]->tid), NULL, philo_act, (void *)philos[i]);
 		pthread_create_error_check(thr_err_chk);
-		thr_err_chk = pthread_create(&(philos[i]->monitor), NULL, monitor_act, (void *)philos[i]);
-		pthread_create_error_check(thr_err_chk);
+		pthread_detach(philos[i]->tid);
 		philos[i]->rule = rules;
 		philos[i]->num = i;
 		philos[i]->mutex = mutexs;
-		philos[i]->r_fork = mutexs->fork_mutex[i];
-		philos[i]->l_fork = mutexs->fork_mutex[(i + 1) % rules->num];
-		printf("%d\n", i);
+		philos[i]->r_fork = &(mutexs->fork_mutex[i]);
+		philos[i]->l_fork = &(mutexs->fork_mutex[(i + 1) % rules->num]);
+		gettimeofday(&(philos[i]->start), NULL);
+		usleep(100);
+		i++;
 	}
 	return (philos);
 }
@@ -38,7 +39,7 @@ t_rule	*rule_structure(char **av)
 	if (av[5])
 		rules->must_eat = ft_atoi(av[5]);
 	else
-		rules->must_eat = 0;
+		rules->must_eat = -1;
 	return (rules);
 }
 

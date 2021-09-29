@@ -16,16 +16,6 @@ void	*philo_act(void *data)
 	return (NULL);
 }
 
-void	*monitor_act(void *data)
-{
-	t_philo	*philos;
-
-	philos = (t_philo *)data;
-	return (NULL);
-}
-
-
-
 int		main(int ac, char **av)
 {
 	t_philo	**philos;
@@ -38,12 +28,6 @@ int		main(int ac, char **av)
 	mutexs = mutex_structure(rules->num);
 	philos = philo_structure(rules, mutexs);
 
-	int i = rules->num - 1;
-	while(i > 0)
-	{
-		pthread_join(philos[i]->tid, NULL);
-		i--;
-	}
-
+	while(1);
 	return (0);
 }

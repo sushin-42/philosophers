@@ -36,13 +36,13 @@ enum states {
 typedef struct		s_philo
 {
 	pthread_t		tid;
-	pthread_t		monitor;
 	int				num;
-	pthread_mutex_t	r_fork;
-	pthread_mutex_t	l_fork;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*l_fork;
 	int				eat_cnt;
 	struct s_rule	*rule;
 	struct s_mutex	*mutex;
+	struct timeval	start;
 }					t_philo;
 
 typedef struct		s_rule
@@ -71,6 +71,8 @@ void	take_fork(t_philo *philos);
 void	act_eat(t_philo *philos);
 void	writing(t_philo *philos, int state);
 void	act_sleep(t_philo *philos);
+void	div_usleep(long int time);
+long int	timediff(struct timeval *start, struct timeval *end);
 
 
 
