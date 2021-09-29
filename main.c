@@ -10,6 +10,8 @@ void	*philo_act(void *data)
 		take_fork(philos);
 		act_eat(philos);
 		putdown_fork(philos);
+		if (philos->eat_cnt >= philos->rule->must_eat && philos->rule->must_eat != -1)
+			break;
 		act_sleep(philos);
 		act_think(philos);
 	}

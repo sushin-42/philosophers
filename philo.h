@@ -24,9 +24,7 @@
 # define THINK 3
 # define LFORK 4
 # define RFORK 5
-# define PLFORK 6
-# define PRFORK 7
-# define DIE 8
+# define DIE 6
 
 
 enum states {
@@ -44,7 +42,6 @@ typedef struct		s_philo
 	int				eat_cnt;
 	struct s_rule	*rule;
 	struct s_mutex	*mutex;
-	struct timeval	start;
 	struct timeval	eat_time;
 
 }					t_philo;
@@ -56,6 +53,8 @@ typedef struct		s_rule
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat;
+	int				die_check;
+	struct timeval	start;
 }					t_rule;
 
 typedef struct		s_mutex

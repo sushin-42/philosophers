@@ -2,16 +2,18 @@
 
 void	div_usleep(long int time)
 {
-	struct timeval	starttime;
 	struct timeval	checktime;
-	long int check = 0;
+	long int std_time;
+	long int check;
 
-	gettimeofday(&starttime, NULL);
-	while (check <= time)
+	check = 0;
+	gettimeofday(&checktime, NULL);
+	std_time = (checktime.tv_sec * 1000) + (checktime.tv_usec) / 1000;
+	while (check < std_time + time)
 	{
-		usleep(100);
 		gettimeofday(&checktime, NULL);
-		check = timediff(&starttime, &checktime);
+		check = (checktime.tv_sec * 1000) + (checktime.tv_usec) / 1000;
+		usleep(1000);
 	}
 
 }
@@ -35,10 +37,10 @@ void	writing(t_philo *philos, int state)
 	struct timeval	current_time;
 	long int	printtime;
 
-	gettimeofday(&current_time, NULL);
-	printtime = timediff(&(philos->start), &current_time);
-
 	pthread_mutex_lock(&(philos->mutex->writing_mutex));
+	gettimeofday(&current_time, NULL);
+	printtime = timediff(&(philos->rule->start), &current_time);
+
 	if (state == 1)
 		printf("%ldms %d is eating \n", printtime, philos->num);
 	else if (state == 2)
@@ -50,10 +52,9 @@ void	writing(t_philo *philos, int state)
 	else if (state == 5)
 		printf("%ldms %d has taken a right fork\n", printtime, philos->num);
 	else if (state == 6)
-		printf("%ldms %d put down right fork\n", printtime, philos->num);
-	else if (state == 7)
-		printf("%ldms %d put down right fork\n", printtime, philos->num);
-	else if (state == 8)
+	{
 		printf("%ldms %d died\n", printtime, philos->num);
+		return ;
+	}
 	pthread_mutex_unlock(&(philos->mutex->writing_mutex));
 }
