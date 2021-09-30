@@ -6,7 +6,6 @@ t_philo	**philo_structure(t_rule *rules, t_mutex *mutexs)
 	int		i;
 	int		thr_err_chk;
 
-
 	philos = (t_philo **)malloc(sizeof(t_philo *) * rules->num);
 	i = 0;
 	gettimeofday(&(rules->start), NULL);
@@ -19,7 +18,8 @@ t_philo	**philo_structure(t_rule *rules, t_mutex *mutexs)
 		philos[i]->mutex = mutexs;
 		philos[i]->r_fork = &(mutexs->fork_mutex[i]);
 		philos[i]->l_fork = &(mutexs->fork_mutex[(i + 1) % rules->num]);
-		thr_err_chk = pthread_create(&(philos[i]->tid), NULL, philo_act, (void *)philos[i]);
+		thr_err_chk = pthread_create(&(philos[i]->tid), NULL, philo_act,
+				(void *)philos[i]);
 		pthread_create_error_check(thr_err_chk);
 		pthread_detach(philos[i]->tid);
 		usleep(100);
@@ -47,10 +47,10 @@ t_rule	*rule_structure(char **av)
 
 t_mutex	*mutex_structure(int philonum)
 {
-	int	i;
+	int				i;
 	pthread_mutex_t	*fork_mutex;
 	pthread_mutex_t	writing_mutex;
-	t_mutex *main_mutex;
+	t_mutex			*main_mutex;
 
 	main_mutex = (t_mutex *)malloc(sizeof(t_mutex));
 	fork_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * philonum);

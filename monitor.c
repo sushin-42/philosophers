@@ -10,9 +10,9 @@ int	check_alive(t_philo **philos)
 	while (i < (*philos)->rule->num)
 	{
 		gettimeofday(&check_death, NULL);
-		timepast = (check_death.tv_sec - philos[i]->eat_time.tv_sec ) * 1000
-		+ (check_death.tv_usec - philos[i]->eat_time.tv_usec) / 1000;
-		if (timepast > (long int)(philos[i]->rule->time_to_die) )
+		timepast = (check_death.tv_sec - philos[i]->eat_time.tv_sec) * 1000
+			 + (check_death.tv_usec - philos[i]->eat_time.tv_usec) / 1000;
+		if (timepast > (long int)(philos[i]->rule->time_to_die))
 		{
 			writing(philos[i], DIE);
 			philos[i]->rule->die_check = 1;

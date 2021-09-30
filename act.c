@@ -2,17 +2,16 @@
 
 void	take_fork(t_philo *philos)
 {
-		pthread_mutex_lock(philos->r_fork);
-		pthread_mutex_lock(philos->l_fork);
-		writing(philos, RFORK);
-		writing(philos, LFORK);
-
+	pthread_mutex_lock(philos->r_fork);
+	pthread_mutex_lock(philos->l_fork);
+	writing(philos, RFORK);
+	writing(philos, LFORK);
 }
 
 void	putdown_fork(t_philo *philos)
 {
-		pthread_mutex_unlock(philos->r_fork);
-		pthread_mutex_unlock(philos->l_fork);
+	pthread_mutex_unlock(philos->r_fork);
+	pthread_mutex_unlock(philos->l_fork);
 }
 
 void	act_eat(t_philo *philos)
@@ -25,7 +24,6 @@ void	act_eat(t_philo *philos)
 
 void	act_sleep(t_philo *philos)
 {
-
 	writing(philos, SLEEP);
 	div_usleep(philos->rule->time_to_sleep);
 }

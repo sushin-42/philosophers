@@ -3,8 +3,8 @@
 void	div_usleep(long int time)
 {
 	struct timeval	checktime;
-	long int std_time;
-	long int check;
+	long int		std_time;
+	long int		check;
 
 	check = 0;
 	gettimeofday(&checktime, NULL);
@@ -15,19 +15,14 @@ void	div_usleep(long int time)
 		check = (checktime.tv_sec * 1000) + (checktime.tv_usec) / 1000;
 		usleep(1000);
 	}
-
 }
-
-
-
 
 long int	timediff(struct timeval *start, struct timeval *end)
 {
-	long int endtime;
-	long int starttime;
+	long int	endtime;
+	long int	starttime;
 
 	endtime = (end->tv_sec * 1000) + end->tv_usec / 1000;
-
 	starttime = (start->tv_sec * 1000) + start->tv_usec / 1000;
 	return (endtime - starttime);
 }
@@ -35,12 +30,11 @@ long int	timediff(struct timeval *start, struct timeval *end)
 void	writing(t_philo *philos, int state)
 {
 	struct timeval	current_time;
-	long int	printtime;
+	long int		printtime;
 
 	pthread_mutex_lock(&(philos->mutex->writing_mutex));
 	gettimeofday(&current_time, NULL);
 	printtime = timediff(&(philos->rule->start), &current_time);
-
 	if (state == 1)
 		printf("%ldms %d is eating \n", printtime, philos->num);
 	else if (state == 2)
