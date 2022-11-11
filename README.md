@@ -4,7 +4,7 @@
 In this project, you will learn the basics of threading a process. <br/>
 You will see how to create threads and you will discover mutexes.
 
-## CMD
+## How to use it
 ```
 $> make
 
