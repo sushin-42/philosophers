@@ -26,11 +26,7 @@ int	check_alive(t_philo **philos)
 
 void	die_monitor(t_philo **philos)
 {
-	int		p_num;
-	int		i;
-
-	i = 0;
-	p_num = (*philos)->rule->num;
+	
 	while (1)
 	{
 		if (check_alive(philos) == 1)
